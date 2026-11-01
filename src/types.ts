@@ -1,55 +1,75 @@
+export enum HttpMetod {
+    Get = 'GET',
+    Post = 'POST',
+}
+
+export enum Endpoint {
+    Sources = 'sources',
+    Everything = 'everything',
+    TopHeadlines = 'top-headlines',
+}
+
+export enum ApiStatus {
+    Ok = 'ok',
+    Error = 'error',
+}
+
 // Источник новости (например, TechCrunch)
 export interface Source {
-  id: string | null;
-  name: string;
+    id: string | null;
+    name: string;
 }
 
 // Одна новостная статья — то, что приходит в массиве articles
 export interface Article {
-  source: Source;
-  author: string | null;
-  title: string;
-  description: string | null;
-  url: string;
-  urlToImage: string | null;
-  publishedAt: string;
-  content: string | null;
+    source: Source;
+    author: string | null;
+    title: string;
+    description: string | null;
+    url: string;
+    urlToImage: string | null;
+    publishedAt: string;
+    content: string | null;
 }
 
+export type ArticlePreview = Pick<
+    Article,
+    'title' | 'author' | 'source' | 'description' | 'url' | 'urlToImage' | 'publishedAt'
+>;
 // Ответ от эндпоинта /everything или /top-headlines
 export interface NewsResponse {
-  status: string;
-  totalResults: number;
-  articles: Article[];
+    status: ApiStatus;
+    totalResults: number;
+    articles: Article[];
 }
 
 // Один источник в списке (для эндпоинта /sources)
 export interface SourceItem {
-  id: string;
-  name: string;
-  description: string;
-  url: string;
-  category: string;
-  language: string;
-  country: string;
+    id: string;
+    name: string;
+    description: string;
+    url: string;
+    category: string;
+    language: string;
+    country: string;
 }
 
 // Ответ от эндпоинта /sources
 export interface SourcesResponse {
-  status: string;
-  totalResults: number;
-  sources: SourceItem[];
+    status: string;
+    totalResults: number;
+    sources: SourceItem[];
 }
 
 // Опции, которые передаются в Loader (ключ API и т.п.)
 export interface LoaderOptions {
-  apiKey: string;
+    apiKey: string;
 }
 
 // Параметры запроса — эндпоинт и дополнительные параметры
 export interface RequestParams {
-  endpoint: string;
-  options?: Record<string, string>;
+    endpoint: Endpoint;
+    options?: Partial<Record<string, string | number>>;
 }
 
 // Универсальный тип для колбэка — дженерик

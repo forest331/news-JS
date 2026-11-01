@@ -1,10 +1,10 @@
-import { DataCallback, LoaderOptions, RequestParams } from '../../types';
+import { DataCallback, HttpMetod, LoaderOptions, RequestParams } from '../../types';
 
 class Loader {
     private baseLink: string;
-    private options: LoaderOptions;
+    private options: Readonly<LoaderOptions>;
 
-    constructor(baseLink: string, options: LoaderOptions) {
+    constructor(baseLink: string, options: Readonly<LoaderOptions>) {
         this.baseLink = baseLink;
         this.options = options;
     }
@@ -15,7 +15,7 @@ class Loader {
             console.error('No callback for GET response');
         }
     ): void {
-        this.load<T>('GET', endpoint, callback, options);
+        this.load<T>(HttpMetod.Get, endpoint, callback, options);
     }
 
     private errorHandler(res: Response): Response {
@@ -28,22 +28,22 @@ class Loader {
         return res;
     }
 
-    private makeUrl(options: Record<string, string>, endpoint: string): string {
+    private makeUrl(options: Partial<Record<string, string | number>>, endpoint: string): string {
         const urlOptions: Record<string, string> = { ...this.options, ...options };
         let url = `${this.baseLink}${endpoint}?`;
 
         Object.keys(urlOptions).forEach((key) => {
-            url += `${key}=${urlOptions[key]}&`;
+            url += `${key}=${urlOptions[key as keyof typeof urlOptions]}&`;
         });
 
         return url.slice(0, -1);
     }
 
     private load<T>(
-        method: string,
+        method: HttpMetod,
         endpoint: string,
         callback: DataCallback<T>,
-        options: Record<string, string> = {}
+        options: Partial<Record<string, string | number>> = {}
     ): void {
         fetch(this.makeUrl(options, endpoint), { method })
             .then(this.errorHandler)
