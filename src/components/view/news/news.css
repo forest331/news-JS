@@ -17,7 +17,7 @@
 
 .news__item .news__meta {
     position: relative;
-    height: 200px;
+    min-height: 200px;
 }
 
 .news__item .news__meta-photo {
@@ -90,7 +90,9 @@
     margin-left: -10px;
     opacity: 0;
     vertical-align: middle;
-    transition: margin 0.3s, opacity 0.3s;
+    transition:
+        margin 0.3s,
+        opacity 0.3s;
 }
 
 .news__item .news__description .news__read-more a:hover:after {
@@ -162,5 +164,11 @@
 
     .news__item.alt .news__meta-details {
         padding-left: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .news__item .news__description h2 {
+        font-size: 1.3rem;
     }
 }

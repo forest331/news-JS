@@ -1,6 +1,10 @@
 {
-    "plugins": ["prettier", "import"],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["prettier", "import", "@typescript-eslint"],
     "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:import/recommended",
         "plugin:prettier/recommended",
         "prettier"
     ],
@@ -13,9 +17,20 @@
         "browser": true,
         "node": true
     },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx", ".json"]
+            }
+        },
+        "import/ignore": [
+            "\\.(css|scss|sass|less)$"
+        ]
+    },
     "rules": {
         "no-debugger": "off",
         "no-console": 0,
-        "class-methods-use-this": "off"
+        "class-methods-use-this": "off",
+        "@typescript-eslint/no-explicit-any": "error"
     }
 }
