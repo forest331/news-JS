@@ -1,35 +1,72 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 body {
+    margin: 0;
     color: #fff;
     background: #17181c;
     font-family: sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
-
+.container {
+    width: 100%;
+    padding-inline: max(2rem, calc((100% - 1200px) / 2));
+}
 header {
-    padding: 10px 30px;
+    padding-block: 2rem;
 }
 
 header h1 {
-    font-size: 40px;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
     font-weight: 800;
+    margin: 0;
 }
 
-footer {
-    height: 100px;
+main {
+    flex: 1;
+}
+
+.footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 2rem;
+    padding-block: 1.5rem 1rem;
+    background: #0f1014;
+    margin-top: 2rem;
+    flex-wrap: wrap;
 }
-footer .copyright {
-    font-size: 14px;
-    color: #333;
-    text-align: center;
+
+.footer__link {
+    color: #70d6ff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.2s;
 }
-footer .copyright a {
-    color: #444;
+
+.footer__link:hover {
+    opacity: 0.7;
 }
-footer .copyright a:hover {
-    color: #555;
+
+.footer__year {
+    color: #a2a2a2;
+    font-size: 0.9rem;
 }
-footer .copyright:before {
-    content: '©';
+
+.footer__logo {
+    height: 2.5rem;
+    width: auto;
+    display: block;
+}
+
+@media (max-width: 480px) {
+    .footer {
+        gap: 1rem;
+        flex-direction: column;
+    }
 }
